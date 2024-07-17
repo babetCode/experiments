@@ -29,6 +29,27 @@ def trc_pd(trcfile):
         return dct, df
 
 
+##  function which takes openCap .trc marker data and outputs xyz no.-->array index dictionary, numpy arr
+
+def trc_np(trcfile):
+    with open(trcfile) as fd:
+        #read file into list
+        lines = fd.readlines()
+        #make dictionary
+        header = 'Frame'+'\t'+'Time'+'\t'+lines[4].lstrip()
+        dct = dict(zip(header.rstrip().split('\t'), [i for i in range(len(header))]))
+        #make array
+        lines = lines[6:]
+        lines2d = [l.rstrip().split('\t') for l in lines]
+        linesfl = [[float(i) for i in l] for l in lines2d]
+        arr = np.array(linesfl)
+        return dct, arr
+
+
+def xyzcols(numlst):
+    return [['X'+str(i), 'Y'+str(i), 'Z'+str(i)] for i in numlst]
+
+
 def pyr(n, l, r):
     # Convert the inputs to numpy arrays
     n = np.array(n)
@@ -99,23 +120,6 @@ def pyr2(n, l, r):
     return [pitch, yaw, roll]
 
 
-##  function which takes openCap .trc marker data and outputs xyz no.-->array index dictionary, numpy arr
-
-def trc_np(trcfile):
-    with open(trcfile) as fd:
-        #read file into list
-        lines = fd.readlines()
-        #make dictionary
-        header = 'Frame'+'\t'+'Time'+'\t'+lines[4].lstrip()
-        dct = dict(zip(header.rstrip().split('\t'), [i for i in range(len(header))]))
-        #make array
-        lines = lines[6:]
-        lines2d = [l.rstrip().split('\t') for l in lines]
-        linesfl = [[float(i) for i in l] for l in lines2d]
-        arr = np.array(linesfl)
-        return dct, arr
-
-    
 ##  find midpoint of two points, returns [x,y,z] list
     
 def midpt(a,b):
