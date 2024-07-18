@@ -46,8 +46,11 @@ def trc_np(trcfile):
         return dct, arr
 
 
-def xyzcols(numlst):
-    return [['X'+str(i), 'Y'+str(i), 'Z'+str(i)] for i in numlst]
+def xyzcols(array, dic, numlst):
+    cols = []
+    for i in numlst:
+        cols.append(array[:, dic[i]:dic[i]+3])
+    return cols[0], cols[1], cols[2]
 
 
 def pyr(n, l, r):

@@ -7,11 +7,19 @@ def main():
     dc, arr = trc_np('PyLibWalk2.trc')
 
     #print(arr[:,2:5])
-    print(xyzcols([62, 63]))
-    print(type(dc['X62']))
 
-    for i in arr[:10, dc['X62']:dc['Z62']+1]:
-        print(i)
+    i, j, k = xyzcols(arr, dc, ['X60', 'X63', 'X62'])
+
+    for q, r, s in zip(i,j,k):
+        print(pyr(q,r,s))
+        print('BREAK')
+    
+
+    llwrist = arr[:20, dc['X62']:dc['Z62']+1]
+
+    lmwrist = arr[:20, dc['X63']:dc['Z63']+1]
+
+
     
 
 if __name__ == "__main__":
